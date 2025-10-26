@@ -1,0 +1,16 @@
+{
+  "specversion": "1.0",
+  "type": "shopping.product.updated",
+  "source": "/catalogue/products",
+  "subject": "products/prod-12345",
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "time": "2025-10-26T10:30:00Z",
+  "datacontenttype": "application/json",
+  "data": {
+    "id": "prod-12345",
+    "name": "Premium Wireless Headphones",
+    "pricePence": 7999,
+    "description": "High-quality wireless headphones with noise cancellation and 30-hour battery life",
+    "updatedAt": "2025-10-26T10:30:00.000Z"
+  }
+}
