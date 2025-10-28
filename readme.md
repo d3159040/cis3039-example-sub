@@ -77,9 +77,9 @@ Remember to follow our naming convention, e.g. `shopping-lab-ab47-rg`
 
 ```bash
 az storage account create \
-  --name <storage-account-name> \
-  --resource-group <resource-group-name> \
-  --location <location> \
+  --name shoppingdevcs47funcstore \
+  --resource-group shopping-dev-cs47-rg \
+  --location germanywestcentral \
   --sku Standard_LRS
 ```
 
@@ -89,10 +89,10 @@ Remember storage accounts must just be letters and numbers, e.g. `shoppinglabab4
 
 ```bash
 az functionapp create \
-  --name <function-app-name> \
-  --resource-group <resource-group-name> \
-  --storage-account <storage-account-name> \
-  --consumption-plan-location <location> \
+  --name shopping-dev-cs47-func \
+  --resource-group shopping-dev-cs47-rg \
+  --storage-account shoppingdevcs47funcstore \
+  --consumption-plan-location germanywestcentral \
   --runtime node \
   --functions-version 4
 ```
@@ -101,7 +101,7 @@ az functionapp create \
 
 ```bash
 npm run build
-func azure functionapp publish <function-app-name>
+func azure functionapp publish shopping-dev-cs47-func
 ```
 
 ### Create Event Grid Subscription
@@ -112,8 +112,8 @@ func azure functionapp publish <function-app-name>
 
 ```bash
 az eventgrid topic show \
-  --name <your-topic-name> \
-  --resource-group <resource-group-name> \
+  --name shopping-dev-cs47-products-topic \
+  --resource-group shopping-dev-cs47-rg \
   --query "id" \
   -o tsv
 ```
@@ -122,8 +122,8 @@ az eventgrid topic show \
 
 ```bash
 az functionapp function show \
-  --name <function-app-name> \
-  --resource-group <resource-group-name> \
+  --name shopping-dev-cs47-func \
+  --resource-group shopping-dev-cs47-rg \
   --function-name "productUpdatedEventGrid" \
   --query "id" \
   -o tsv
@@ -135,10 +135,10 @@ Function name is the name of the Event Grid Triggered function within your Azure
 
 ```bash
 az eventgrid event-subscription create \
-  --name <subscription-name> \
-  --source-resource-id "<topic-resource-id>" \
+  --name shopping-dev-cs47-products-sub \
+  --source-resource-id "<what-is-returned-from-step-one>" \
   --endpoint-type azurefunction \
-  --endpoint "<function-resource-id>"
+  --endpoint "<what-is-returned-from-step-two>"
 ```
 
 The resource ids come from steps 1 and 2. Follow our naming convention for the subscription name, e.g. `shopping-lab-ab47-products-sub`
@@ -152,7 +152,7 @@ The Function app is running in the cloud. It will recieve event notifications vi
 View live logs from your deployed function:
 
 ```bash
-func azure functionapp logstream <function-app-name>
+func azure functionapp logstream shopping-dev-cs47-func
 ```
 
 Or use Azure CLI:
